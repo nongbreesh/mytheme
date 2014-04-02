@@ -3,8 +3,8 @@
 /* 	Basic Theme Settings
   /* ---------------------------------------------------------------------- */
 
-define('THEME_BASE_DIR', TEMPLATEPATH . '/');
-define('THEME_BASE_URL', get_template_directory_uri() . '/');
+define('ZOAISH_BASE_DIR', TEMPLATEPATH . '/');
+define('ZOAISH_BASE_DIR', get_template_directory_uri() . '/');
 
 
 if (!isset($content_width))
@@ -16,34 +16,17 @@ if (!isset($content_width))
 require get_template_directory() . '/inc/custom-header.php';
 
 /**
- * Twenty Thirteen only works in WordPress 3.6 or later.
+ * Zoaish only works in WordPress 3.6 or later.
  */
 if (version_compare($GLOBALS['wp_version'], '3.6-alpha', '<'))
     require get_template_directory() . '/inc/back-compat.php';
 
-/**
- * Twenty Thirteen setup.
- *
- * Sets up theme defaults and registers the various WordPress features that
- * Twenty Thirteen supports.
- *
- * @uses load_theme_textdomain() For translation/localization support.
- * @uses add_editor_style() To add Visual Editor stylesheets.
- * @uses add_theme_support() To add support for automatic feed links, post
- * formats, and post thumbnails.
- * @uses register_nav_menu() To add support for a navigation menu.
- * @uses set_post_thumbnail_size() To set a custom post thumbnail size.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
- */
 function zoaish_setup() {
     /*
-     * Makes Twenty Thirteen available for translation.
+     * Makes Zoaish available for translation.
      *
      * Translations can be added to the /languages/ directory.
-     * If you're building a theme based on Twenty Thirteen, use a find and
+     * If you're building a theme based on Zoaish, use a find and
      * replace to change 'zoaish' to the name of your theme in all
      * template files.
      */
@@ -94,7 +77,7 @@ add_action('after_setup_theme', 'zoaish_setup');
  * The use of Source Sans Pro and Bitter by default is localized. For languages
  * that use characters not supported by the font, the font can be disabled.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @return string Font stylesheet or empty string if disabled.
  */
@@ -135,7 +118,7 @@ function zoaish_fonts_url() {
 /**
  * Enqueue scripts and styles for the front end.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @return void
  */
@@ -151,17 +134,12 @@ function zoaish_scripts_styles() {
     if (is_active_sidebar('sidebar-1'))
         wp_enqueue_script('jquery-masonry');
 
-    // Loads JavaScript file with functionality specific to Twenty Thirteen.
-    wp_enqueue_script('zoaish-script', get_template_directory_uri() . '/js/functions.js', array('jquery'), '2013-07-18', true);
-
-    // Add Source Sans Pro and Bitter fonts, used in the main stylesheet.
-    wp_enqueue_style('zoaish-fonts', zoaish_fonts_url(), array(), null);
-
-    // Add Genericons font, used in the main stylesheet.
+    wp_enqueue_script('zoaish-script1', get_template_directory_uri() . '/js/custom.js', array('jquery'), '2014-03-28', true);
+    wp_enqueue_script('zoaish-script2', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '2014-03-28', true);
+    wp_enqueue_script('zoaish-script3', get_template_directory_uri() . '/js/jquery.jInvertScroll', array('jquery'), '2014-03-28', true);
     wp_enqueue_style('genericons', get_template_directory_uri() . '/fonts/genericons.css', array(), '2.09');
-
-    // Loads our main stylesheet.
-    wp_enqueue_style('zoaish-style', get_stylesheet_uri(), array(), '2013-07-18');
+    wp_enqueue_style('zoaish-style1', get_template_directory_uri() . '/css/bootstrap.min.css', '2014-03-28');
+    wp_enqueue_style('zoaish-style2', get_stylesheet_uri(), array(), '2013-07-18');
 
     // Loads the Internet Explorer specific stylesheet.
     wp_enqueue_style('zoaish-ie', get_template_directory_uri() . '/css/ie.css', array('zoaish-style'), '2013-07-18');
@@ -176,7 +154,7 @@ add_action('wp_enqueue_scripts', 'zoaish_scripts_styles');
  * Creates a nicely formatted and more specific title element text for output
  * in head of document, based on current view.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @param string $title Default title text for current view.
  * @param string $sep   Optional separator.
@@ -208,7 +186,7 @@ add_filter('wp_title', 'zoaish_wp_title', 10, 2);
 /**
  * Register two widget areas.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @return void
  */
@@ -241,7 +219,7 @@ if (!function_exists('zoaish_paging_nav')) :
     /**
      * Display navigation to next/previous set of posts when applicable.
      *
-     * @since Twenty Thirteen 1.0
+     * @since Zoaish 1.0
      *
      * @return void
      */
@@ -258,11 +236,11 @@ if (!function_exists('zoaish_paging_nav')) :
 
                 <?php if (get_next_posts_link()) : ?>
                     <div class="nav-previous"><?php next_posts_link(__('<span class="meta-nav">&larr;</span> Older posts', 'zoaish')); ?></div>
-        <?php endif; ?>
+                <?php endif; ?>
 
-        <?php if (get_previous_posts_link()) : ?>
+                <?php if (get_previous_posts_link()) : ?>
                     <div class="nav-next"><?php previous_posts_link(__('Newer posts <span class="meta-nav">&rarr;</span>', 'zoaish')); ?></div>
-        <?php endif; ?>
+                <?php endif; ?>
 
             </div><!-- .nav-links -->
         </nav><!-- .navigation -->
@@ -276,7 +254,7 @@ if (!function_exists('zoaish_post_nav')) :
     /**
      * Display navigation to next/previous post when applicable.
      *
-     * @since Twenty Thirteen 1.0
+     * @since Zoaish 1.0
      *
      * @return void
      */
@@ -294,8 +272,8 @@ if (!function_exists('zoaish_post_nav')) :
             <h1 class="screen-reader-text"><?php _e('Post navigation', 'zoaish'); ?></h1>
             <div class="nav-links">
 
-        <?php previous_post_link('%link', _x('<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'zoaish')); ?>
-        <?php next_post_link('%link', _x('%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'zoaish')); ?>
+                <?php previous_post_link('%link', _x('<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'zoaish')); ?>
+                <?php next_post_link('%link', _x('%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'zoaish')); ?>
 
             </div><!-- .nav-links -->
         </nav><!-- .navigation -->
@@ -311,7 +289,7 @@ if (!function_exists('zoaish_entry_meta')) :
      *
      * Create your own zoaish_entry_meta() to override in a child theme.
      *
-     * @since Twenty Thirteen 1.0
+     * @since Zoaish 1.0
      *
      * @return void
      */
@@ -350,7 +328,7 @@ if (!function_exists('zoaish_entry_date')) :
      *
      * Create your own zoaish_entry_date() to override in a child theme.
      *
-     * @since Twenty Thirteen 1.0
+     * @since Zoaish 1.0
      *
      * @param boolean $echo (optional) Whether to echo the date. Default true.
      * @return string The HTML-formatted post date.
@@ -377,7 +355,7 @@ if (!function_exists('zoaish_the_attached_image')) :
     /**
      * Print the attached image with a link to the next attached image.
      *
-     * @since Twenty Thirteen 1.0
+     * @since Zoaish 1.0
      *
      * @return void
      */
@@ -411,7 +389,7 @@ if (!function_exists('zoaish_the_attached_image')) :
             'post_mime_type' => 'image',
             'order' => 'ASC',
             'orderby' => 'menu_order ID'
-                ));
+        ));
 
         // If there is more than 1 attachment in a gallery...
         if (count($attachment_ids) > 1) {
@@ -445,7 +423,7 @@ endif;
  *
  * Falls back to the post permalink if no URL is found in the post.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @return string The Link format URL.
  */
@@ -464,7 +442,7 @@ function zoaish_get_link_url() {
  * 2. Active widgets in the sidebar to change the layout and spacing.
  * 3. When avatars are disabled in discussion settings.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @param array $classes A list of existing body class values.
  * @return array The filtered body class list.
@@ -487,7 +465,7 @@ add_filter('body_class', 'zoaish_body_class');
 /**
  * Adjust content_width value for video post formats and attachment templates.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @return void
  */
@@ -505,7 +483,7 @@ add_action('template_redirect', 'zoaish_content_width');
 /**
  * Add postMessage support for site title and description for the Customizer.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @param WP_Customize_Manager $wp_customize Customizer object.
  * @return void
@@ -524,7 +502,7 @@ add_action('customize_register', 'zoaish_customize_register');
  * Binds JavaScript handlers to make the Customizer preview
  * reload changes asynchronously.
  *
- * @since Twenty Thirteen 1.0
+ * @since Zoaish 1.0
  *
  * @return void
  */
@@ -533,3 +511,7 @@ function zoaish_customize_preview_js() {
 }
 
 add_action('customize_preview_init', 'zoaish_customize_preview_js');
+
+
+
+

@@ -77,6 +77,7 @@ function zoaish_custom_header_fonts() {
 
 	// Add Genericons font.
 	wp_enqueue_style( 'genericons', get_template_directory_uri() . '/fonts/genericons.css', array(), '2.09' );
+        
 }
 add_action( 'admin_print_styles-appearance_page_custom-header', 'zoaish_custom_header_fonts' );
 

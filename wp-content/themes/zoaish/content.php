@@ -27,8 +27,8 @@
 		<?php endif; // is_single() ?>
 
 		<div class="entry-meta">
-			<?php twentythirteen_entry_meta(); ?>
-			<?php edit_post_link( __( 'Edit', 'twentythirteen' ), '<span class="edit-link">', '</span>' ); ?>
+			<?php zoaish_entry_meta(); ?>
+			<?php edit_post_link( __( 'Edit', 'zoaish' ), '<span class="edit-link">', '</span>' ); ?>
 		</div><!-- .entry-meta -->
 	</header><!-- .entry-header -->
 
